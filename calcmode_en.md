@@ -193,7 +193,7 @@ This method is designed to extract **either similar or dissimilar features** fro
 ### Usage Scenarios
 - **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
 - **α = 0, β = 0.5**:
-  - **for full-parameter models**: this setting averages features from **Models A and B**: $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$. It represents a midpoint between extracting similar and dissimilar features.
+  - **for full-parameter models**: This setting averages features from **Models A and B**: $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$. It represents a midpoint between extracting similar and dissimilar features.
   - **for LoRA networks**: Without a base model (**Model A**), this setting results in $\frac{\text{lerp}(\text{B}, \text{C}, \alpha)}{2}$, again reflecting a midpoint between similarity and dissimilarity extraction.
 - **α = 0, β = 1**: Extracts features in **Model B** that are dissimilar to those in **Model C**.
 - **α = 1**: Reverses the roles of **Models B and C**.
