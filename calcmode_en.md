@@ -176,20 +176,20 @@ _Note also compared with either the Median/Guassin filters individually how you 
 >In these cases you could increase the Alpha up to 2, as smooth Add at 1 is a lower impact change individually than regular Add, but this of course depends on your desired outcome.
 
 
-### extract
-#### Extracting (Dis)Similar Features from Differential Models
+## extract
+### Extracting (Dis)Similar Features from Differential Models
 This method facilitates the extraction of similar or dissimilar features from two differential models, such as those based on the LoRA approach where modifications are represented as changes (ΔW) to the original model weights (W). For example, in models trained on red apples and green apples, it enables the isolation of specific features like "red objects", "green objects", or general "apple" characteristics.
 
 - **Model A**: The original model before any additional training. It's recommended to use the most recent common ancestor of models **B** and **C** to minimize the identification of non-essential similarities.
 - **Model B**: A model obtained by further training the base model.
 - **Model C**: Another model obtained by further training the base model.
 
-#### Parameters
+### Parameters
 - **alpha**: Determines the direction of feature extraction. Setting **alpha** to **0** extracts features from model **B** that are similar (or dissimilar, depending on **beta**) to model **C**, and vice versa for **alpha** set to **1**.
 - **beta**: Controls the type of feature extraction. A **beta** of **0** focuses on **similar** features, while a **beta** of **1** focuses on **dissimilar** features.
 - **smoothness**: A parameter to adjust the rectification of cosine similarity values, typically set around 0.3 if there's no specific preference.
 
-#### Example Usage
+### Example Usage
 - α = 0, β = 0: Extracts features from Model B similar to those in Model C.
 - α = 0, β = 0.5: Results in the average of A and B.
 - α = 0, β = 1: Extracts features from Model B dissimilar to those in Model C.
