@@ -175,39 +175,25 @@ _Note also compared with either the Median/Guassin filters individually how you 
 >Sometimes you may want to use this smooth Add difference as an alternative to the regular, even without the risk of burning.
 >In these cases you could increase the Alpha up to 2, as smooth Add at 1 is a lower impact change individually than regular Add, but this of course depends on your desired outcome.
 
+
 ### extract
-### Extraction of (Dis)Similar Features from Differential Models
+#### Extracting (Dis)Similar Features from Differential Models
+This method facilitates the extraction of similar or dissimilar features from two differential models, such as those based on the LoRA approach where modifications are represented as changes (ΔW) to the original model weights (W). For example, in models trained on red apples and green apples, it enables the isolation of specific features like "red objects", "green objects", or general "apple" characteristics.
 
-xFed is a cutting-edge tool designed for the extraction of similar or dissimilar features from differential models of the same machine learning architecture. It is particularly useful for isolating elements learned uniquely by models, such as "red object", "green object", or "apple", when trained on different datasets or with different learning objectives.
+- **Model A**: The original model before any additional training. It's recommended to use the most recent common ancestor of models **B** and **C** to minimize the identification of non-essential similarities.
+- **Model B**: A model obtained by further training the base model.
+- **Model C**: Another model obtained by further training the base model.
 
-#### How to Use
+#### Parameters
+- **alpha**: Determines the direction of feature extraction. Setting **alpha** to **0** extracts features from model **B** that are similar (or dissimilar, depending on **beta**) to model **C**, and vice versa for **alpha** set to **1**.
+- **beta**: Controls the type of feature extraction. A **beta** of **0** focuses on **similar** features, while a **beta** of **1** focuses on **dissimilar** features.
+- **smoothness**: A parameter to adjust the rectification of cosine similarity values, typically set around 0.3 if there's no specific preference.
 
-1. **Prepare Your Models**: Before using xFed, you need to have the weights of your base model(model A) and the two differential models (B and C) that have been fine-tuned or adapted from the base model. 
-
-2. **Select Model Weights**:
-    - **Model_A**: Use the dropdown to select the path to the base model weights tensor.
-    - **Model_B**: Use the dropdown to select the path to model B's weights tensor.
-    - **Model_C**: Use the dropdown to select the path to model C's weights tensor.
-
-3. **Configure Parameters**:
-    - **α (alpha)**: Adjust the slider to set the value of α. Setting α to 0 will extract components from B that are (dis)similar to C, while setting α to 1 will do the reverse.
-    - **β (beta)**: Adjust the slider to toggle between extracting similar and dissimilar features. B β of 0 extracts similar features, and a β of 1 extracts dissimilar features.
-    - **option (smoothness)**: Adjust the slider to set the smoothness level, which affects the rectification of cosine similarity from the interval [-1, 1] to [0, 1].
-
-### Notes
-- The alpha (α), beta (β), and smoothness (σ) parameters allow fine-grained control over the feature extraction process, enabling you to tailor the results to your specific needs.
-
-### Example Configuration
-
-- **Checkpoint Name**: `extracted_features_red_apple`
-- **Model A**: `base_model`
-- **Model B**: `red_apple_model`
-- **Model C**: `green_apple_model`
-- **α**: `0.0`
-- **β**: `0.5`
-- **σ**: `0.0`
-
-With this configuration, if α is set to 0, β is set to 0.5, and σ is set to 0, the result will be equivalent to `Model A + (a - Model A) * 0.5`. This would extract features that are midway between the model A and model B, emphasizing features learned exclusively by model B.
+#### Example Usage
+- α = 0, β = 0: Extracts features from Model B similar to those in Model C.
+- α = 0, β = 0.5: Results in the average of A and B.
+- α = 0, β = 1: Extracts features from Model B dissimilar to those in Model C.
+- Reversing B and C is achieved by setting α = 1.
 
 
 ## tensor
