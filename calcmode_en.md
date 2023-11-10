@@ -178,10 +178,10 @@ _Note also compared with either the Median/Guassin filters individually how you 
 
 ## <a id="extract">Extracting (Dis)Similar Features from Differential Models</a>
 ### _Available modes :_ Add difference
-This method facilitates the extraction of similar or dissimilar features from two differential models, such as those based on the LoRA approach where modifications are represented as changes (ΔW) to the original model weights (W). For example, in models trained on red apples and green apples, it enables the isolation of specific features like "red objects", "green objects", or general "apple" characteristics.
+This method is specifically designed for differential models sharing a common ancestor, enabling the extraction of similar or dissimilar features from two such models. When working with full-weight models, it's essential to specify the most recent common ancestor as **Model A**. However, for LoRA-based models, **Model A** should be left blank.
 
 ### Models
-- **Model A**: The original model before any additional training. It's recommended to use the most recent common ancestor of models **B** and **C** to minimize the identification of non-essential similarities.
+- **Model A**: The original model before additional training, serving as the common ancestor for **Model B** and **Model C**. This field is crucial when dealing with full-weight models but is left blank for LoRA-based models.
 - **Model B**: A model obtained by further training the base model.
 - **Model C**: Another model obtained by further training the base model.
 
@@ -195,6 +195,10 @@ This method facilitates the extraction of similar or dissimilar features from tw
 - α = 0, β = 0.5: Results in the average of A and B.
 - α = 0, β = 1: Extracts features from Model B dissimilar to those in Model C.
 - Reversing B and C is achieved by setting α = 1.
+
+### Note
+- For full-weight models, the common ancestor must be specified in **Model A**.
+- For LoRA-based models, **Model A** should remain blank, directly utilizing the differential properties of **Model B** and **Model C**.
 
 
 ## tensor
