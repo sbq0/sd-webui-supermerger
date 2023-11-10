@@ -176,7 +176,7 @@ _Note also compared with either the Median/Guassin filters individually how you 
 >In these cases you could increase the Alpha up to 2, as smooth Add at 1 is a lower impact change individually than regular Add, but this of course depends on your desired outcome.
 
 ### extract
-### xFed Feature Extraction method
+### Extraction of (Dis)Similar Features from Differential Models
 
 xFed is a cutting-edge tool designed for the extraction of similar or dissimilar features from differential models of the same machine learning architecture. It is particularly useful for isolating elements learned uniquely by models, such as "red object", "green object", or "apple", when trained on different datasets or with different learning objectives.
 
