@@ -178,7 +178,7 @@ _Note also compared with either the Median/Guassin filters individually how you 
 
 ## <a id="extract">Extracting (Dis)Similar Features from Differential Models</a>
 ### _Available modes :_ Add difference
-This method is designed to extract **either similar or dissimilar features** from two different models that are built upon a common base model.
+This method is designed to extract **either similar or dissimilar features** from two differential models that are built upon a common base model.
 
 ### Overview of Models
 - **Model A**: The **common base model** for full-parameter models. For LoRA networks, this is not applicable and should be left blank.
@@ -186,14 +186,14 @@ This method is designed to extract **either similar or dissimilar features** fro
 - **Model C**: Another model further trained on top of **Model A**.
 
 ### Key Parameters
-- **alpha (α)**: Determines the focus of feature extraction. Setting **α = 0** targets **Model B**, while **α = 1** targets **Model C**.
-- **beta (β)**: Determines the nature of feature extraction. **β = 0** for **similar features**, and **β = 1** for **dissimilar features**.
+- **alpha (α)**: Controls the focus of feature extraction between **Model B** (**α = 0**) and **Model C** (**α = 1**).
+- **beta (β)**: Controls the nature of feature extraction, with **β = 0** for **similar features** and **β = 1** for **dissimilar features**.
 - **smoothness**: Adjusts cosine similarity rectification, typically around **0.3**.
 
 ### Usage Scenarios
 - **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
 - **α = 0, β = 0.5**:
-  - **for full-parameter models**: This setting yields an average of the features from **Models A and B**, resulting in $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$. It represents a midpoint between extracting similar and dissimilar features.
+  - **for full-parameter models**: this setting averages features from **Models A and B**: $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$. It represents a midpoint between extracting similar and dissimilar features.
   - **for LoRA networks**: Without a base model (**Model A**), this setting results in $\frac{\text{lerp}(\text{B}, \text{C}, \alpha)}{2}$, again reflecting a midpoint between similarity and dissimilarity extraction.
 - **α = 0, β = 1**: Extracts features in **Model B** that are dissimilar to those in **Model C**.
 - **α = 1**: Reverses the roles of **Models B and C**.
