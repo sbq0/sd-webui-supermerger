@@ -178,27 +178,29 @@ _Note also compared with either the Median/Guassin filters individually how you 
 
 ## <a id="extract">Extracting (Dis)Similar Features from Differential Models</a>
 ### _Available modes :_ Add difference
-This method is specifically designed for differential models sharing a common base model, enabling the extraction of similar or dissimilar features from two such models. When working with full-weight models, it's essential to specify the most recent common base model as **Model A**. However, for LoRA-based models, **Model A** should be left blank.
+This method is designed to **extract similar or dissimilar features** from two differential models built upon a shared base model. It works for both full-parameter models and LoRA networks.
 
-### Models
-- **Model A**: The original base model before additional training, serving as the common ancestor for **Model B** and **Model C**. This field is crucial when dealing with full-weight models but is left blank for LoRA-based models.
-- **Model B**: A model obtained by further training the base model.
-- **Model C**: Another model obtained by further training the base model.
+### Overview of Models
+- **Model A**: The **common base model** for full-parameter models. For LoRA networks, this is not applicable and should be left blank.
+- **Model B**: A model further trained on top of **Model A**.
+- **Model C**: Another model further trained on top of **Model A**.
 
-### Parameters
-- **alpha**: Determines the direction of feature extraction. Setting **alpha** to **0** extracts features from **Model B** that are similar (or dissimilar, depending on **beta**) to **Model C**, and vice versa for **alpha** set to **1**.
-- **beta**: Controls the type of feature extraction. A **beta** of **0** focuses on **similar** features, while a **beta** of **1** focuses on **dissimilar** features.
-- **smoothness**: A parameter to adjust the rectification of cosine similarity values, typically set around 0.3 if there's no specific preference.
+### Key Parameters
+- **alpha (α)**: Determines the direction of feature extraction. **α = 0** focuses on **Model B**, and **α = 1** on **Model C**.
+- **beta (β)**: Determines the nature of feature extraction. **β = 0** for **similar features**, and **β = 1** for **dissimilar features**.
+- **smoothness**: Adjusts cosine similarity rectification, typically around **0.3**.
 
-### Example Usage
-- α = 0, β = 0: Extracts features from **Model B** similar to those in **Model C**.
-- α = 0, β = 0.5: If **Model A** is specified, results in the average of **Model A** and **Model B**. If **Model A** is blank, it results in half the features of **Model B**.
-- α = 0, β = 1: Extracts features from **Model B** dissimilar to those in **Model C**.
-- Reversing **Model B** and **Model C** is achieved by setting α = 1.
+### Usage Scenarios
+- **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
+- **α = 0, β = 0.5**:
+  - **for full-parameter models**: This setting yields an average of the features from **Models A and B**, resulting in $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$. It represents a midpoint between extracting similar and dissimilar features.
+  - **for LoRA networks**: Without a base model (**Model A**), this setting results in $\frac{\text{lerp}(\text{B}, \text{C}, \alpha)}{2}$, again reflecting a midpoint between similarity and dissimilarity extraction.
+- **α = 0, β = 1**: Extracts features in **Model B** that are dissimilar to those in **Model C**.
+- **α = 1**: Reverses the roles of **Models B and C**.
 
-### Note
-- For full-weight models, the common base model must be specified in **Model A**.
-- For LoRA-based models, **Model A** should remain blank, directly utilizing the differential properties of **Model B** and **Model C**.
+### Additional Notes
+- For full-parameter models, specify **Model A**.
+- In the case of LoRA networks, leave **Model A** unspecified and directly use the differential properties of **Models B and C**.
 
 
 ## tensor
