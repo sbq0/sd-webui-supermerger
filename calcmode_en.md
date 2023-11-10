@@ -178,7 +178,7 @@ _Note also compared with either the Median/Guassin filters individually how you 
 
 ## <a id="extract">Extracting (Dis)Similar Features from Differential Models</a>
 ### _Available modes :_ Add difference
-This method is designed to **extract similar or dissimilar features** from two differential models built upon a shared base model. It works for both full-parameter models and LoRA networks.
+This method is designed to extract **either similar or dissimilar features** from two different models that are built upon a common base model.
 
 ### Overview of Models
 - **Model A**: The **common base model** for full-parameter models. For LoRA networks, this is not applicable and should be left blank.
@@ -186,7 +186,7 @@ This method is designed to **extract similar or dissimilar features** from two d
 - **Model C**: Another model further trained on top of **Model A**.
 
 ### Key Parameters
-- **alpha (α)**: Determines the direction of feature extraction. **α = 0** focuses on **Model B**, and **α = 1** on **Model C**.
+- **alpha (α)**: Determines the focus of feature extraction. Setting **α = 0** targets **Model B**, while **α = 1** targets **Model C**.
 - **beta (β)**: Determines the nature of feature extraction. **β = 0** for **similar features**, and **β = 1** for **dissimilar features**.
 - **smoothness**: Adjusts cosine similarity rectification, typically around **0.3**.
 
@@ -199,7 +199,7 @@ This method is designed to **extract similar or dissimilar features** from two d
 - **α = 1**: Reverses the roles of **Models B and C**.
 
 ### Additional Notes
-- For full-parameter models, specify **Model A**.
+- When working with full-parameter models, it's necessary to specify **Model A** as the base model.
 - In the case of LoRA networks, leave **Model A** unspecified and directly use the differential properties of **Models B and C**.
 
 
