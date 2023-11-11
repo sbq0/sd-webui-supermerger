@@ -181,7 +181,7 @@ _Note also compared with either the Median/Guassin filters individually how you 
 This method is designed to extract **either similar or dissimilar features** from two differential models that are built upon a common base model.
 
 ### Using Three Models
-In this configuration, we use a base model (**Model A**) along with two derivative models (**Model B** and **Model C**), both developed from **Model A**. The differential models in focus are "**Model B - Model A**" and "**Model C - Model A**". Both derivatives share **Model A** as their common ancestor, ideally the most recent one, to reduce false similarities.
+In this configuration, we use a base model (**Model A**) along with two derived models (**Model B** and **Model C**), both developed from **Model A**. The differential models in focus are "**Model B - Model A**" and "**Model C - Model A**". Both derivatives share **Model A** as their common ancestor, ideally the most recent one, to reduce false similarities.
 
 ### Using Two Differential Models
 Alternatively, when working with LoRA networks, **Model A** should be blank. We directly utilize two differential models: **Model B** and **Model C**. This approach implicitly assumes a shared base model, much like **Model A** in the three-model setup. 
