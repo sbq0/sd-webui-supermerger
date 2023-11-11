@@ -180,10 +180,11 @@ _Note also compared with either the Median/Guassin filters individually how you 
 ### _Available modes :_ Add difference
 This method is designed to extract **either similar or dissimilar features** from two differential models that are built upon a common base model.
 
-### Overview of Models
-- **Model A**: The **common base model** for full-parameter models. For LoRA networks, this is not applicable and should be left blank.
-- **Model B**: A model further trained on top of **Model A**.
-- **Model C**: Another model further trained on top of **Model A**.
+### Using Three Models
+In this configuration, we use a base model (**Model A**) along with two derivative models (**Model B** and **Model C**), both developed from **Model A**. The differential models in focus are "**Model B - Model A**" and "**Model C - Model A**". Both derivatives share **Model A** as their common ancestor, ideally the most recent one, to reduce false similarities.
+
+### Using Two Differential Models
+Alternatively, when working with LoRA networks, **Model A** should be blank. We directly utilize two differential models: **Model B** and **Model C**. This approach implicitly assumes a shared base model, much like **Model A** in the three-model setup. 
 
 ### Key Parameters
 - **alpha (α)**: Controls the focus of feature extraction between **Model B** (**α = 0**) and **Model C** (**α = 1**).
@@ -192,15 +193,11 @@ This method is designed to extract **either similar or dissimilar features** fro
 
 ### Usage Scenarios
 - **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
-- **α = 0, β = 0.5**:
-  - **for full-parameter models**: This setting averages features from **Models A and B**: $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$. It represents a midpoint between extracting similar and dissimilar features.
-  - **for LoRA networks**: Without a base model (**Model A**), this setting results in $\frac{\text{lerp}(\text{B}, \text{C}, \alpha)}{2}$, again reflecting a midpoint between similarity and dissimilarity extraction.
+- **α = 0, β = 0.5**: Represents a balanced extraction between similarity and dissimilarity for features from:
+  - **Full-parameter models**: $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$
+  - **LoRA networks**: $\frac{\text{lerp}(\text{B}, \text{C}, \alpha)}{2}$
 - **α = 0, β = 1**: Extracts features in **Model B** that are dissimilar to those in **Model C**.
-- **α = 1**: Reverses the roles of **Models B and C**.
-
-### Additional Notes
-- When working with full-parameter models, it's necessary to specify **Model A** as the base model.
-- In the case of LoRA networks, leave **Model A** unspecified and directly use the differential properties of **Models B and C**.
+- **α = 1**: Reverses the focus between **Models B and C**.
 
 
 ## tensor
