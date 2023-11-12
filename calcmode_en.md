@@ -179,16 +179,16 @@ _Note also compared with either the Median/Guassin filters individually how you 
 ### _Available modes :_ Add difference
 This method is designed to extract **either similar or dissimilar features** from two differential models that are built upon a common base model.
 
-### Using Three Models
+### Using Three Full-Parameter Models
 In this configuration, we use a base model (**Model A**) along with two derived models (**Model B** and **Model C**), both developed from **Model A**. The differential models in focus are "**Model B - Model A**" and "**Model C - Model A**". Both derivatives share **Model A** as their common ancestor, ideally the most recent one, to reduce false similarities.
 
-### <a id="extractlora">Using Two Differential Models(extract from two LoRAs)</a>
-The extraction of common and distinct characteristics of two LoRAs will be carried out. This process is based on the assumption that the LoRAs are trained on a shared foundational model. However, the results may be unpredictable when applying this method to LoRAs that have been trained from different sources.
+### Using Two LoRA Networks
+Alternatively, when working with LoRA networks, **Model A** should be blank. We directly utilize two differential models: **Model B** and **Model C**. This approach implicitly assumes a shared base model, much like **Model A** in the three-model setup. 
 
 ### Key Parameters
 - **alpha (α)**: Controls the focus of feature extraction between **Model B** (**α = 0**) and **Model C** (**α = 1**).
 - **beta (β)**: Controls the nature of feature extraction, with **β = 0** for **similar features** and **β = 1** for **dissimilar features**.
-- **smoothness(Option value)**: Adjusts cosine similarity rectification, typically around **0.3**.
+- **smoothness**: Adjusts cosine similarity rectification, typically around **0.3**.
 
 ### Usage Scenarios
 - **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
