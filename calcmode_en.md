@@ -188,7 +188,7 @@ Alternatively, when working with LoRA networks, **Model A** should be blank. We 
 ### Key Parameters
 - **alpha (α)**: Controls the focus of feature extraction between **Model B** (**α = 0**) and **Model C** (**α = 1**).
 - **beta (β)**: Controls the nature of feature extraction, with **β = 0** for **similar features** and **β = 1** for **dissimilar features**.
-- **smoothness**: Adjusts cosine similarity rectification, typically around **0.3**.
+- **smoothness (optional)**: Adjusts cosine similarity rectification, typically around **0.3**.
 
 ### Usage Scenarios
 - **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
