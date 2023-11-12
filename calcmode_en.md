@@ -180,15 +180,15 @@ _Note also compared with either the Median/Guassin filters individually how you 
 This method is designed to extract **either similar or dissimilar features** from two differential models that are built upon a common base model.
 
 ### Using Three Full-Parameter Models
-In this configuration, we use a base model (**Model A**) along with two derived models (**Model B** and **Model C**), both developed from **Model A**. The differential models in focus are "**Model B - Model A**" and "**Model C - Model A**". Both derivatives share **Model A** as their common ancestor, ideally the most recent one, to reduce false similarities.
+In this setup, we use a base model (**Model A**) along with two derived models (**Model B** and **Model C**), both developed from **Model A**. The differential models in focus are "**Model B - Model A**" and "**Model C - Model A**". Both derivatives share **Model A** as their common ancestor, ideally the most recent one, to reduce false similarities.
 
 ### Using Two LoRA Networks
-Alternatively, when working with LoRA networks, **Model A** should be blank. We directly utilize two differential models: **Model B** and **Model C**. This approach implicitly assumes a shared base model, much like **Model A** in the three-model setup. 
+In this setup, we directly use two differential models: **Model B** and **Model C**. Both models are assumed to be trained on a common base model, similar to **Model A** in the three-model setup. However, if **Model B** and **Model C** derive from different base models, the results may be unpredictable due to underlying model discrepancies.
 
 ### Key Parameters
 - **alpha (α)**: Controls the focus of feature extraction between **Model B** (**α = 0**) and **Model C** (**α = 1**).
 - **beta (β)**: Controls the nature of feature extraction, with **β = 0** for **similar features** and **β = 1** for **dissimilar features**.
-- **smoothness (optional)**: Adjusts cosine similarity rectification, typically around **0.3**.
+- **smoothness**: Adjusts cosine similarity rectification, typically around **0.3**.
 
 ### Usage Scenarios
 - **α = 0, β = 0**: Extracts features in **Model B** that are similar to those in **Model C**.
@@ -196,7 +196,7 @@ Alternatively, when working with LoRA networks, **Model A** should be blank. We 
   - **Full-parameter models**: $\frac{\text{A} + \text{lerp}(\text{B}, \text{C}, \alpha)}{2}$
   - **LoRA networks**: $\frac{\text{lerp}(\text{B}, \text{C}, \alpha)}{2}$
 - **α = 0, β = 1**: Extracts features in **Model B** that are dissimilar to those in **Model C**.
-- **α = 1**: Reverses the focus between **Models B and C**.
+- **α = 1**: Reverses the focus between **Model B** and **Model C**.
 
 ## tensor
 ### Available modes : weight sum only
