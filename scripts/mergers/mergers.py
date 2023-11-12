@@ -471,7 +471,7 @@ def smerge(weights_a,weights_b,model_a,model_b,model_c,base_alpha,base_beta,mode
             tensormerge("2" not in calcmode,key,dim,theta_0,theta_1,current_alpha,current_beta)
 
         elif "extract" == calcmode:
-            theta_0[key] = extract_super(theta_0[key],theta_1[key],theta_2[key],current_alpha,current_beta,opt_value)
+            theta_0[key] = extract_features(theta_0[key],theta_1[key],theta_2[key],current_alpha,current_beta,opt_value)
 
         elif calcmode == "self":
             theta_0[key] = theta_0[key].clone() * current_alpha
@@ -658,7 +658,7 @@ def traindiff(key,current_alpha,theta_0,theta_1,theta_2):
 
 ################################################
 ##### Extract
-def extract_super(base: Tensor | None, a: Tensor, b: Tensor, alpha: float, beta: float, smoothness: float) -> Tensor:
+def extract_features(base: Tensor | None, a: Tensor, b: Tensor, alpha: float, beta: float, smoothness: float) -> Tensor:
     assert base is None or base.shape == a.shape
     assert a.shape == b.shape
     assert 0 <= alpha <= 1
@@ -673,16 +673,6 @@ def extract_super(base: Tensor | None, a: Tensor, b: Tensor, alpha: float, beta:
     m = lerp(c, 1 - c, beta)
     result = base + lerp(a * m, b * m, alpha)
     return result.to(dtype)
-
-def extract(a: Tensor, b: Tensor, p: float, smoothness: float) -> Tensor:
-    assert a.shape == b.shape
-    assert 0 <= p <= 1
-    assert 0 <= smoothness <= 1
-    
-    r = relu if smoothness == 0 else partial(softplus, beta=1 / smoothness)
-    c = r(cosine_similarity(a, b, dim=-1)).unsqueeze(dim=-1).repeat_interleave(b.shape[-1], -1)
-    m = torch.lerp(c, torch.ones_like(c) - c, p)
-    return a * m
 
 ################################################
 ##### Tensor Merge
